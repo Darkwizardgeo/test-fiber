@@ -16,19 +16,17 @@ class Main extends Component {
   }
 
   getWeatherInfoByCityName = async (cityName, countryCode) => {
-    fetch('http://api.openweathermap.org/data/2.5/weather?q='+cityName+','+countryCode+'&APPID='+API_KEY)
+    return await fetch('http://api.openweathermap.org/data/2.5/weather?q='+cityName+','+countryCode+'&APPID='+API_KEY)
     .then( (response) => {
       return response.json();
     })
-    .then( (data) => data )
   }
 
   getWeatherForecastByCityName = async (cityName, countryCode) => {
-    fetch('http://api.openweathermap.org/data/2.5/forecast?q='+cityName+','+countryCode+'&APPID='+API_KEY)
+    return await fetch('http://api.openweathermap.org/data/2.5/forecast?q='+cityName+','+countryCode+'&APPID='+API_KEY)
     .then( (response) => {
       return response.json();
     })
-    .then( (data) => data )
   }
 
   getWeatherInfo = async (e) => {
@@ -75,28 +73,26 @@ class Main extends Component {
   }
 
   render() {
-    return <div>
-      <h1>{this.props.name}</h1>
-      <table className="main-widget">
-        <tbody>
-          <tr>
-            <th>Ciudad/Pais</th>
-            <th>Temperatura</th>
-            <th>Pronostico</th>
-          </tr>
-          <tr>
-            <td>{this.state.ciudadName},{this.state.pais}</td>
-            <td>{this.state.temperatura}</td>
-            <td>{this.state.pronostico}</td>
-          </tr>
-          <tr>
-            <th>Extendido</th>
-            <div className="extended-container">
-              <ExtendedForecast info={this.state.extended}/>
-            </div>
-          </tr>
-        </tbody>
-      </table>
+    return <div className="container-fluid">
+      <div className="jumbotron">
+        <h1>{this.props.name}</h1>
+      </div>
+      <div className="panel panel-default">
+        <div className="panel-heading">
+          <h3 className="panel-title"><strong>Ciudad/Pais:</strong> {this.state.ciudadName},{this.state.pais}</h3>
+        </div>
+        <div className="panel-body">
+          <div className="col-sm-6">
+            Temperatura: {this.state.temperatura}
+          </div>
+          <div className="col-sm-6">
+            Pronostico: {this.state.pronostico}
+          </div>
+          <div className="container-fluid">
+            <ExtendedForecast info={this.state.extended}/>
+          </div>
+        </div>
+      </div>
       <CityForm 
         getWeatherInfoByCityName={this.getWeatherInfoByCityName} 
         getWeatherForecastByCityName={this.getWeatherForecastByCityName}

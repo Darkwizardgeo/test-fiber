@@ -9,14 +9,14 @@ class ExtendedForecast extends Component{
     setExtendedDay = (e) => {
         this.setState({
             select: e.target.value,
-            selectedInfo: <div><tr>
-                <th>Temperatura</th>
-                <th>Pronostico</th>
-                </tr>
-                <tr>
-                <td>{this.props.info[e.target.value].main.temp}</td>
-                <td>{this.props.info[e.target.value].weather[0].description}</td>
-            </tr></div>
+            selectedInfo: <div className="panel-body">
+                    <div className="col-sm-6">
+                        Temperatura: {this.props.info[e.target.value].main.temp}
+                    </div>
+                    <div className="col-sm-6">
+                        Pronostico: {this.props.info[e.target.value].weather[0].description}
+                    </div>
+                </div>
         });
     };
 
@@ -27,12 +27,12 @@ class ExtendedForecast extends Component{
             </option>
         );
 
-        return <tr>
+        return <div className="panel panel-default">
                 <select onChange={this.setExtendedDay} value={this.state.select}>
                     {extendedList}
                 </select>
                 {this.state.selectedInfo}
-            </tr>
+            </div>
     };
 }
 
